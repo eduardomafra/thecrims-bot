@@ -15,8 +15,17 @@ namespace thecrims_bot
             User user = new User();
             TCServices service = new TCServices();
 
+            Console.WriteLine("  _______ _           _____      _                 ____        _   ");
+            Console.WriteLine(" |__   __| |         / ____|    (_)               |  _ \\      | |  ");
+            Console.WriteLine("    | |  | |__   ___| |     _ __ _ _ __ ___  ___  | |_) | ___ | |_ ");
+            Console.WriteLine("    | |  | '_ \\ / _ \\ |    | '__| | '_ \\` _\\/ __| |  _ < / _ \\| __|");
+            Console.WriteLine("    | |  | | | |  __/ |____| |  | | | | | | \\__ \\ | |_) | (_) | |_ ");
+            Console.WriteLine("    |_|  |_| |_|\\___|\\_____|_|  |_|_| |_| |_|___/ |____/ \\___/ \\__|");
+            Console.WriteLine("                                                                   ");
+            Console.WriteLine("                                                                   ");
+
             Console.WriteLine("Bem vindo ao The Crims Bot!");
-            Console.WriteLine("Primeiro nós precisamos efetuar o login à sua conta");
+            Console.WriteLine("Realize o login");
             Console.Write("Usuário -> ");
             string username = Console.ReadLine();
             Console.Write("Senha -> ");
