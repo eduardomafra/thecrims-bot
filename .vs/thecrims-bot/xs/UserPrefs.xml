@@ -1,0 +1,28 @@
+﻿<Properties StartupConfiguration="{D8D35A05-BC98-4EAF-9DFB-0663B6E840C4}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="models/User.cs">
+    <Files>
+      <File FileName="Program.cs" Line="27" Column="62" />
+      <File FileName="models/User.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="thecrims-bot" expanded="True">
+            <Node name="thecrims-bot" expanded="True">
+              <Node name="models" expanded="True">
+                <Node name="User.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.thecrims-bot PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

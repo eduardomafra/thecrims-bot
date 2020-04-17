@@ -1,0 +1,16 @@
+/Users/lucassoares/Desktop/tcbot/thecrims-bot/bin/Debug/netcoreapp3.1/thecrims-bot.deps.json
+/Users/lucassoares/Desktop/tcbot/thecrims-bot/bin/Debug/netcoreapp3.1/thecrims-bot.runtimeconfig.json
+/Users/lucassoares/Desktop/tcbot/thecrims-bot/bin/Debug/netcoreapp3.1/thecrims-bot.runtimeconfig.dev.json
+/Users/lucassoares/Desktop/tcbot/thecrims-bot/bin/Debug/netcoreapp3.1/thecrims-bot.dll
+/Users/lucassoares/Desktop/tcbot/thecrims-bot/bin/Debug/netcoreapp3.1/thecrims-bot.pdb
+/Users/lucassoares/Desktop/tcbot/thecrims-bot/bin/Debug/netcoreapp3.1/HtmlAgilityPack.dll
+/Users/lucassoares/Desktop/tcbot/thecrims-bot/bin/Debug/netcoreapp3.1/Newtonsoft.Json.dll
+/Users/lucassoares/Desktop/tcbot/thecrims-bot/bin/Debug/netcoreapp3.1/System.Xml.XPath.XmlDocument.dll
+/Users/lucassoares/Desktop/tcbot/thecrims-bot/obj/Debug/netcoreapp3.1/thecrims-bot.csprojAssemblyReference.cache
+/Users/lucassoares/Desktop/tcbot/thecrims-bot/obj/Debug/netcoreapp3.1/thecrims-bot.csproj.CoreCompileInputs.cache
+/Users/lucassoares/Desktop/tcbot/thecrims-bot/obj/Debug/netcoreapp3.1/thecrims-bot.AssemblyInfoInputs.cache
+/Users/lucassoares/Desktop/tcbot/thecrims-bot/obj/Debug/netcoreapp3.1/thecrims-bot.AssemblyInfo.cs
+/Users/lucassoares/Desktop/tcbot/thecrims-bot/obj/Debug/netcoreapp3.1/thecrims-bot.csproj.CopyComplete
+/Users/lucassoares/Desktop/tcbot/thecrims-bot/obj/Debug/netcoreapp3.1/thecrims-bot.dll
+/Users/lucassoares/Desktop/tcbot/thecrims-bot/obj/Debug/netcoreapp3.1/thecrims-bot.pdb
+/Users/lucassoares/Desktop/tcbot/thecrims-bot/obj/Debug/netcoreapp3.1/thecrims-bot.genruntimeconfig.cache
