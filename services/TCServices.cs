@@ -142,7 +142,7 @@ namespace thecrims_bot.services
 
             nightclub = this.nightclubs.Where(w => w.business_id == 1).First();
 
-            Console.WriteLine("Entrando na " + nightclub.name, Color.BlueViolet);
+            Console.WriteLine("\nEntrando na " + nightclub.name, Color.BlueViolet);
 
             string jsonEnterNightclub = "{\"id\": \"" + nightclub.id.ToString() + "\", \"input_counters\":{}, \"action_timestamp\":" + DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString() + "}";
             var enterNightClub = await client.PostAsync("api/v1/nightclub", new StringContent(jsonEnterNightclub, Encoding.UTF8, "application/json"));
@@ -153,7 +153,7 @@ namespace thecrims_bot.services
 
             await buyDrugs(jsonDrugs);
 
-            Console.WriteLine("Saindo da " + nightclub.name, Color.BlueViolet);
+            Console.WriteLine("Saindo da " + nightclub.name + "\n", Color.BlueViolet);
 
             string jsonExitNightClub = "{\"exit_key\": \"" + nightclub.id.ToString() + "\", \"e_at\":null, \"reason\":\"Manual exit\", \"input_counters\":{}, \"action_timestamp\":" + DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString() + "}";
             var exitNightClub = await client.PostAsync("api/v1/nightclub/exit", new StringContent(jsonExitNightClub, Encoding.UTF8, "application/json"));
