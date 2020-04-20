@@ -180,6 +180,12 @@ namespace thecrims_bot.services
 
             if (this.rob.energy > this.user.stamina)
             {
+
+                if(this.user.addiction > 40)
+                {
+                    await Detox();
+                }
+
                 await enterNightclub();
             }
 
@@ -203,15 +209,42 @@ namespace thecrims_bot.services
                 if (await getRip())
                 {
                     Console.WriteLine(this.msgRip, Color.DarkRed);
-                    Console.WriteLine("Tentando novamente em 5 minutos...");
+                    Console.WriteLine("Tentando novamente em 5 minutos...", Color.Yellow);
                     Thread.Sleep(5 * 60 * 1000);
                     await Rob();
                 }
                 else
                 {
 
-                    Console.Write("Tentando novamente...");
+                    Console.Write("Tentando novamente...", Color.Yellow);
                     await Rob();
+                }
+            }
+        }
+
+        public async Task Detox()
+        {
+
+            Console.WriteLine("\nAplicando Detox...\n", Color.BlueViolet);
+
+            try
+            {
+                var detox = await client.PostAsync("api/v1/hospital/detox", null);
+            }
+            catch
+            {
+                if (await getRip())
+                {
+                    Console.WriteLine(this.msgRip, Color.DarkRed);
+                    Console.WriteLine("Tentando novamente em 5 minutos...", Color.Yellow);
+                    Thread.Sleep(5 * 60 * 1000);
+                    await Detox();
+                }
+                else
+                {
+
+                    Console.Write("Tentando novamente...", Color.Yellow);
+                    await Detox();
                 }
             }
         }
