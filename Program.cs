@@ -11,13 +11,11 @@ namespace thecrims_bot
     {
         static async Task Main(string[] args)
         {
-            //TCParser p = new TCParser();
-            //p.parseUser("a");
 
             //TCComands command = new TCComands();
             //command.showInfo();
 
-            User user = new User();
+            //User user = new User();
             TCServices service = new TCServices();
 
             Console.WriteLine("  _______ _           _____      _                 ____        _   ");
@@ -43,7 +41,7 @@ namespace thecrims_bot
 
                 while (true)
                 {
-                    await service.getUser();
+                    //await service.getUser();
                     await service.Rob();
                 }
 
