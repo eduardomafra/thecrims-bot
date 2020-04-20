@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -7,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using thecrims_bot.models;
 using thecrims_bot.parser;
+using Console = Colorful.Console;
 
 namespace thecrims_bot.services
 {
@@ -92,10 +94,19 @@ namespace thecrims_bot.services
         public async Task getRobberies()
         {
             TCParser parser = new TCParser();
+            string jsonRobberies = "";
 
-            var getRobberies = await client.GetAsync("api/v1/robberies");
-            getRobberies.EnsureSuccessStatusCode();
-            string jsonRobberies = getRobberies.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+            try
+            {
+                var getRobberies = await client.GetAsync("api/v1/robberies");
+                getRobberies.EnsureSuccessStatusCode();
+                jsonRobberies = getRobberies.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+            }
+            catch
+            {
+                await getRobberies();
+            }
+            
 
             this.robberies = parser.parseRobberies(jsonRobberies);
             this.rob = getBestRob();
@@ -127,8 +138,9 @@ namespace thecrims_bot.services
             string jsonEnterNightclub = "{\"id\": \"" + nightclub.id.ToString() + "\", \"input_counters\":{}, \"action_timestamp\":" + DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString() + "}";
             var enterNightClub = await client.PostAsync("api/v1/nightclub", new StringContent(jsonEnterNightclub, Encoding.UTF8, "application/json"));
             enterNightClub.EnsureSuccessStatusCode();
-            
-            string jsonDrugs = enterNightClub.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+            var enterNightClubGet = await client.GetAsync("api/v1/nightclub");
+
+            string jsonDrugs = enterNightClubGet.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
             await buyDrugs(jsonDrugs);
 
@@ -145,7 +157,7 @@ namespace thecrims_bot.services
 
             this.drugs = parser.parseDrugs(jsonDrugs);
 
-            Console.WriteLine("Comprando droga");
+            Console.WriteLine("Comprando " + this.drugs[0].name);
 
             string jsonBuyDrugs = "{\"id\": " + this.drugs[0].id + ", \"input_counters\":{}, \"action_timestamp\":" + DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString() + "}";
             var buyDrugs = await client.PostAsync("api/v1/nightclub/drug", new StringContent(jsonBuyDrugs, Encoding.UTF8, "application/json"));
@@ -166,8 +178,17 @@ namespace thecrims_bot.services
             Console.WriteLine("Roubando " + this.rob.translated_name);
 
             string jsonRob = "{\"id\": " + this.rob.id + ", \"input_counters\":{}, \"action_timestamp\":" + DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString() + "}";
-            var rob = await client.PostAsync("api/v1/rob", new StringContent(jsonRob, Encoding.UTF8, "application/json"));
 
+            try
+            {
+                var rob = await client.PostAsync("api/v1/rob", new StringContent(jsonRob, Encoding.UTF8, "application/json"));
+            }
+            catch
+            {
+                Console.Write("Erro!", Color.Red);
+                Console.Write("Tentando novamente...");
+                await Rob();
+            }
         }
 
         public Robberies getBestRob()

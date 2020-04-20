@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using thecrims_bot.services;
 using thecrims_bot.models;
 using thecrims_bot.parser;
+using thecrims_bot.console;
 
 namespace thecrims_bot
 {
@@ -11,7 +12,11 @@ namespace thecrims_bot
         static async Task Main(string[] args)
         {
             //TCParser p = new TCParser();
-            //p.getChannel("a");
+            //p.parseUser("a");
+
+            //TCComands command = new TCComands();
+            //command.showInfo();
+
             User user = new User();
             TCServices service = new TCServices();
 
@@ -38,8 +43,8 @@ namespace thecrims_bot
 
                 while (true)
                 {
-                     await service.getUser();
-                     await service.Rob();                   
+                    await service.getUser();
+                    await service.Rob();
                 }
 
 
