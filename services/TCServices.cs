@@ -142,22 +142,53 @@ namespace thecrims_bot.services
 
             nightclub = this.nightclubs.Where(w => w.business_id == 1).First();
 
-            Console.WriteLine("\nEntrando na " + nightclub.name, Color.BlueViolet);
+            
+            try
+            {
+                Console.WriteLine("\nEntrando na " + nightclub.name, Color.BlueViolet);
 
-            string jsonEnterNightclub = "{\"id\": \"" + nightclub.id.ToString() + "\", \"input_counters\":{}, \"action_timestamp\":" + DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString() + "}";
-            var enterNightClub = await client.PostAsync("api/v1/nightclub", new StringContent(jsonEnterNightclub, Encoding.UTF8, "application/json"));
-            enterNightClub.EnsureSuccessStatusCode();
-            var enterNightClubGet = await client.GetAsync("api/v1/nightclub");
+                string jsonEnterNightclub = "{\"id\": \"" + nightclub.id.ToString() + "\", \"input_counters\":{}, \"action_timestamp\":" + DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString() + "}";
 
-            string jsonDrugs = enterNightClubGet.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                var enterNightClub = await client.PostAsync("api/v1/nightclub", new StringContent(jsonEnterNightclub, Encoding.UTF8, "application/json"));
+                enterNightClub.EnsureSuccessStatusCode();
+                var enterNightClubGet = await client.GetAsync("api/v1/nightclub");
 
-            await buyDrugs(jsonDrugs);
+                string jsonDrugs = enterNightClubGet.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
-            Console.WriteLine("Saindo da " + nightclub.name + "\n", Color.BlueViolet);
+                await buyDrugs(jsonDrugs);
+            }
+            catch
+            {
+                Console.WriteLine("Erro!", Color.Red);
 
-            string jsonExitNightClub = "{\"exit_key\": \"" + nightclub.id.ToString() + "\", \"e_at\":null, \"reason\":\"Manual exit\", \"input_counters\":{}, \"action_timestamp\":" + DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString() + "}";
-            var exitNightClub = await client.PostAsync("api/v1/nightclub/exit", new StringContent(jsonExitNightClub, Encoding.UTF8, "application/json"));
-            exitNightClub.EnsureSuccessStatusCode();           
+                if (await getRip())
+                {
+                    Console.WriteLine(this.msgRip, Color.DarkRed);
+                    Console.WriteLine("Tentando novamente em 5 minutos...", Color.Yellow);
+                    Thread.Sleep(5 * 60 * 1000);
+                    await enterNightclub();
+                }
+                else
+                {
+
+                    Console.Write("Tentando novamente...", Color.Yellow);
+                    await enterNightclub();
+                }
+            }
+
+            
+            try
+            {
+                Console.WriteLine("Saindo da " + nightclub.name + "\n", Color.BlueViolet);
+
+                string jsonExitNightClub = "{\"exit_key\": \"" + nightclub.id.ToString() + "\", \"e_at\":null, \"reason\":\"Manual exit\", \"input_counters\":{}, \"action_timestamp\":" + DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString() + "}";
+
+                var exitNightClub = await client.PostAsync("api/v1/nightclub/exit", new StringContent(jsonExitNightClub, Encoding.UTF8, "application/json"));
+                exitNightClub.EnsureSuccessStatusCode();
+            } catch
+            {
+
+            }
 
         }
 
@@ -181,7 +212,7 @@ namespace thecrims_bot.services
             if (this.rob.energy > this.user.stamina)
             {
 
-                if(this.user.addiction > 40)
+                if(this.user.addiction > 70)
                 {
                     await Detox();
                 }
