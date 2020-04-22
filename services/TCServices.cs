@@ -612,7 +612,7 @@ namespace thecrims_bot.services
 
         public async Task getVirtualGangRobbery()
         {
-
+            this.plannedRobbery = null;
             Console.WriteLine("Verificando roubo em gangue...", Color.Yellow);
 
             try
