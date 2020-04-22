@@ -16,44 +16,34 @@ namespace thecrims_bot.console
     public class TCComands
     {
         TCServices service;
-        ConsoleKeyInfo cki;
         public TCComands()
         {
             service = new TCServices();          
         }
         public void showInfo()
         {
-            TCParser parser = new TCParser();
-            User user = new User();
-            user = parser.parseUser("a");
 
-            var userTable = new ConsoleTable("Usuário", "Moral", "Respeito", "Tickets", "Stamina", "Vício", "Grana");
-            userTable.AddRow(user.username, user.spirit_name, user.respect, user.tickets, user.stamina, user.addiction, user.cash);
+            var userTable = new ConsoleTable("Username", "Spirit Name", "Respect", "Tickets", "Stamina", "Addiction", "Cash");
+            userTable.AddRow(this.service.user.username, this.service.user.spirit_name, this.service.user.respect, this.service.user.tickets, this.service.user.stamina, this.service.user.addiction, this.service.user.cash.ToString("$ #,###"));
 
-            var userStatsTable = new ConsoleTable("Inteligência", "Força", "Carisma", "Resistência");
-            userStatsTable.AddRow(user.intelligence, user.strength, user.charisma, user.tolerance);
+            var userStatsTable = new ConsoleTable("Intelligence", "Strength", "Charisma", "Tolerance");
+            userStatsTable.AddRow(this.service.user.intelligence, this.service.user.strength, this.service.user.charisma, this.service.user.tolerance);
+
+            var userPowerTable = new ConsoleTable("Single Robbery Power", "Gang Robbery Power", "Assault Power");
+            userPowerTable.AddRow(this.service.user.single_robbery_power, this.service.user.gang_robbery_power, this.service.user.assault_power);
 
             userTable.Options.EnableCount = false;
-            userTable.Write();
-            Console.WriteLine();
             userStatsTable.Options.EnableCount = false;
+            userPowerTable.Options.EnableCount = false;
+            userTable.Write();            
             userStatsTable.Write();
-            Console.WriteLine();
-
-            //var rows = Enumerable.Repeat(new Something(), 10);
-
-            //ConsoleTable
-            //    .From<Something>(rows)
-            //    .Configure(o => o.NumberAlignment = Alignment.Right)
-            //    .Write(Format.Alternative);
-
-            //Console.ReadKey();
+            userPowerTable.Write();
         }
 
         public async Task menu()
         {
-
-            Console.WriteLine("\nSelecione uma opção:");
+            showInfo();
+            Console.WriteLine("Selecione uma opção:");
             Console.WriteLine("[1] - Roubo solo");
             Console.WriteLine("[2] - Roubo com gangue virtual");
             Console.WriteLine("[3] - Sair");
@@ -110,10 +100,17 @@ namespace thecrims_bot.console
             {
 
                 if (Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape) break;
-                await this.service.getVirtualGangRobbery();
-                showStats();
-                Console.WriteLine();
-                Thread.Sleep(1000);
+                try
+                {
+                    await this.service.getVirtualGangRobbery();
+                    Console.WriteLine(this.service.user.ToString(), Color.Green);
+                    Console.WriteLine();
+                    Thread.Sleep(1000);
+                }
+                catch
+                {
+                    return;
+                }
             }
 
             Console.Clear();
@@ -142,13 +139,6 @@ namespace thecrims_bot.console
                 await menu();
             }
 
-        }
-
-        public void showStats()
-        {
-            Console.WriteLine("Respeito: " + this.service.user.respect + " Inteligência: " + this.service.user.intelligence + " Força: " + this.service.user.strength + " Carisma: " + this.service.user.charisma + " Resistência: " + this.service.user.tolerance, Color.Green);
-            Console.WriteLine("Estamina: " + this.service.user.stamina + "%" + " Vício: " + this.service.user.addiction + "%" + " Tickets: " + this.service.user.tickets, Color.Green);
-            Console.WriteLine("Grana: " + Convert.ToDecimal(this.service.user.cash), Color.Green);
         }
 
         public void showTheCrimsBot()

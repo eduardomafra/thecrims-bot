@@ -21,5 +21,16 @@ namespace thecrims_bot.models
         public int addiction { get; set; }
         public int tickets { get; set; }
         public bool in_prision { get; set; }
+        public int single_robbery_power { get; set; }
+        public int gang_robbery_power { get; set; }
+        public int assault_power { get; set; }
+
+        public override string ToString()
+        {
+            return "Respect: " + respect + " Intelligence: " + intelligence + " Strength: " + strength + " Charisma: " + charisma + " Tolerance: " + tolerance
+                + "\nCash: " + cash.ToString("$ #,###") + " Stamina: " + stamina + "%" + " Addiction: " + addiction + "%" + " Tickets: " + tickets 
+                + "\nSingle Robbery Power: " + single_robbery_power + " Gang Robbery Power: " + gang_robbery_power + " Assault Power: " + assault_power;
+        }
+
     }
 }
