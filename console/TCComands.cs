@@ -24,7 +24,7 @@ namespace thecrims_bot.console
         {
 
             var userTable = new ConsoleTable("Username", "Spirit Name", "Respect", "Tickets", "Stamina", "Addiction", "Cash");
-            userTable.AddRow(this.service.user.username, this.service.user.spirit_name, this.service.user.respect, this.service.user.tickets, this.service.user.stamina, this.service.user.addiction, this.service.user.cash.ToString("$ #,###"));
+            userTable.AddRow(this.service.user.username, this.service.user.spirit_name, this.service.user.respect, this.service.user.tickets, this.service.user.stamina + "%", this.service.user.addiction + "%", this.service.user.cash.ToString("$#,###"));
 
             var userStatsTable = new ConsoleTable("Intelligence", "Strength", "Charisma", "Tolerance");
             userStatsTable.AddRow(this.service.user.intelligence, this.service.user.strength, this.service.user.charisma, this.service.user.tolerance);
