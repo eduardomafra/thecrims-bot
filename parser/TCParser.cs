@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using thecrims_bot.models;
@@ -61,6 +62,86 @@ namespace thecrims_bot.parser
             return drugs;
         }
 
+        public List<GangRobbery> parseGangRobbery(string stringGangRobbery)
+        {
+            JObject jsonGangRobbery = JObject.Parse(stringGangRobbery);
+
+            if (jsonGangRobbery["gang_robberies"].ToString() != "false")
+            {
+                //JObject jsonGangRobbery = JObject.Parse(stringPlannedRobbery);
+                if (jsonGangRobbery["gang_robberies"].HasValues)
+                {
+                    return JsonConvert.DeserializeObject<List<GangRobbery>>(jsonGangRobbery["gang_robberies"].ToString());
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
+            //JObject jsonGangRobbery = JObject.Parse(stringGangRobbery);
+            //List<GangRobbery> gangRobbery = JsonConvert.DeserializeObject<List<GangRobbery>>(jsonGangRobbery["gang_robberies"].ToString());
+            //return gangRobbery;
+        }
+
+        public PlannedRobbery parsePlannedRobbery(string stringPlannedRobbery)
+        {
+
+            JObject jsonGangRobbery = JObject.Parse(stringPlannedRobbery);
+
+            if (jsonGangRobbery["planned_robbery"].ToString() != "false")
+            {
+                //JObject jsonGangRobbery = JObject.Parse(stringPlannedRobbery);
+                if (jsonGangRobbery["planned_robbery"].HasValues)
+                {
+                    return JsonConvert.DeserializeObject<PlannedRobbery>(jsonGangRobbery["planned_robbery"].ToString());
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
+                    
+        }
+
+        public PlannedRobbery parseVirtualPlannedRobbery(string stringPlannedRobbery)
+        {
+
+            JObject jsonGangRobbery = JObject.Parse(stringPlannedRobbery);
+
+            if (jsonGangRobbery.ToString() != "false")
+            {
+                //JObject jsonGangRobbery = JObject.Parse(stringPlannedRobbery);
+                if (jsonGangRobbery.HasValues)
+                {
+                    return JsonConvert.DeserializeObject<PlannedRobbery>(jsonGangRobbery.ToString());
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
+        public PlannedRobbery parseExecute(string stringExecute)
+        {
+            JObject jsonExecute = JObject.Parse(stringExecute);
+            return JsonConvert.DeserializeObject<PlannedRobbery>(jsonExecute["planned_robbery"].ToString());
+
+        }
+
         public String parseRip(string stringRip)
         {
 
@@ -73,6 +154,22 @@ namespace thecrims_bot.parser
                 return "";
             }
 
+        }
+
+        public List<String> getGangs(string htmlGangs)
+        {
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(htmlGangs);
+
+            var gangs = htmlDoc.DocumentNode.SelectNodes("//form[@name='gangmembershipapplication']").ToList();
+
+            List<String> gangsUrl = new List<string>();
+            foreach(var gang in gangs)
+            {
+                gangsUrl.Add(gang.Attributes[1].Value);
+            }
+
+            return gangsUrl;
         }
 
     }
