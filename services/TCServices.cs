@@ -170,7 +170,7 @@ namespace thecrims_bot.services
 
                 try
                 {
-                    Console.Write("\nEntrando na " + nightclub.name + "...", Color.BlueViolet);
+                    Console.Write("Entrando na " + nightclub.name + "...", Color.BlueViolet);
 
                     string jsonEnterNightclub = "{\"id\": \"" + nightclub.id.ToString() + "\", \"input_counters\":{}, \"action_timestamp\":" + DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString() + "}";
 
