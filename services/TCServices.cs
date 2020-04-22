@@ -569,7 +569,7 @@ namespace thecrims_bot.services
                 Console.WriteLine("Entrando na gangue virtual...", Color.YellowGreen);
                 var dict = new Dictionary<string, string>();
                 dict.Add("message", "I+wanna+join");
-                var req = new HttpRequestMessage(HttpMethod.Post, "https://www.thecrims.com" + gangsUrl[0]) { Content = new FormUrlEncodedContent(dict) };
+                var req = new HttpRequestMessage(HttpMethod.Post, "https://www.thecrims.com" + gangsUrl[3]) { Content = new FormUrlEncodedContent(dict) };
                 var res = await client.SendAsync(req);
 
             }
@@ -649,6 +649,9 @@ namespace thecrims_bot.services
                     }
 
                     await acceptGangRobbery();
+                } else
+                {
+                    Console.WriteLine("Já aceitou", Color.GreenYellow);
                 }
 
             }

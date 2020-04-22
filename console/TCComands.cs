@@ -62,11 +62,13 @@ namespace thecrims_bot.console
             {
                 case "1":
                     Console.Clear();
+                    showTheCrimsBot();
                     Console.WriteLine("Iniciando roubo solo...\n", Color.YellowGreen);
                     await soloRob();
                     break;
                 case "2":
                     Console.Clear();
+                    showTheCrimsBot();
                     Console.WriteLine("Iniciando roubo com gangue virtual...\n", Color.YellowGreen);
                     await virtualGangRob();
                     break;
@@ -96,7 +98,7 @@ namespace thecrims_bot.console
                 await this.service.getVirtualGangRobbery();
                 showStats();
                 Console.WriteLine();
-                Thread.Sleep(3000);
+                Thread.Sleep(1000);
             }
         }
 
