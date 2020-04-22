@@ -250,7 +250,7 @@ namespace thecrims_bot.services
                 string stringRob = rob.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 this.user = parser.parseUser(stringRob);
                 Console.Write("Sucess! ", Color.Green);
-                Console.WriteLine(this.user.ToString(), Color.Green);
+                //Console.WriteLine(this.user.ToString(), Color.Green);
 
             }
             catch

@@ -82,6 +82,9 @@ namespace thecrims_bot.console
             while (!Console.KeyAvailable)
             {
                 if (Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape) break;
+                Console.Clear();
+                showTheCrimsBot();
+                showInfo();
                 await this.service.Rob();
             }
 
