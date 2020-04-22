@@ -96,6 +96,9 @@ namespace thecrims_bot.console
 
         public async Task virtualGangRob()
         {
+            Console.Clear();
+            showTheCrimsBot();
+            showInfo();
             await this.service.getVirtualGangs();
             await this.service.joinVirtualGang();
 
@@ -105,9 +108,10 @@ namespace thecrims_bot.console
                 if (Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape) break;
                 try
                 {
+                    Console.Clear();
+                    showTheCrimsBot();
+                    showInfo();
                     await this.service.getVirtualGangRobbery();
-                    Console.WriteLine(this.service.user.ToString(), Color.Green);
-                    Console.WriteLine();
                     Thread.Sleep(1000);
                 }
                 catch
@@ -159,8 +163,8 @@ namespace thecrims_bot.console
         public async Task Logout()
         {
             await this.service.Logout();            
-            Thread.Sleep(2000);
-            Environment.Exit(0);
+            //Thread.Sleep(2000);
+            //Environment.Exit(0);
         }
 
     }  

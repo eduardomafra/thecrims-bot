@@ -90,6 +90,8 @@ namespace thecrims_bot.services
                 Console.WriteLine("Encerrando sessão...", Color.Green);
                 var logout = await client.GetAsync("logout");
                 logout.EnsureSuccessStatusCode();
+                Thread.Sleep(2000);
+                Environment.Exit(0);
             }
             catch
             {
@@ -155,58 +157,69 @@ namespace thecrims_bot.services
 
         public async Task enterNightclub()
         {
-            await getNightclubs();
 
-            Nightclubs nightclub = new Nightclubs();
-
-            nightclub = this.nightclubs.Where(w => w.business_id == 1).First();
-
-            
-            try
+            if (haveTickets())
             {
-                Console.WriteLine("\nEntrando na " + nightclub.name, Color.BlueViolet);
 
-                string jsonEnterNightclub = "{\"id\": \"" + nightclub.id.ToString() + "\", \"input_counters\":{}, \"action_timestamp\":" + DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString() + "}";
+                await getNightclubs();
 
-                var enterNightClub = await client.PostAsync("api/v1/nightclub", new StringContent(jsonEnterNightclub, Encoding.UTF8, "application/json"));
-                enterNightClub.EnsureSuccessStatusCode();
-                var enterNightClubGet = await client.GetAsync("api/v1/nightclub");
+                Nightclubs nightclub = new Nightclubs();
 
-                string jsonDrugs = enterNightClubGet.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                nightclub = this.nightclubs.Where(w => w.business_id == 1).First();
 
-                await buyDrugs(jsonDrugs);
-            }
-            catch
-            {
-                Console.WriteLine("Erro!", Color.Red);
 
-                if (await getRip() || await getPrison())
+                try
                 {
-                    Console.WriteLine(this.msgRip, Color.DarkRed);
-                    Console.WriteLine("Tentando novamente em 5 minutos...", Color.Yellow);
-                    Thread.Sleep(5 * 60 * 1000);
-                    await enterNightclub();
+                    Console.Write("\nEntrando na " + nightclub.name + "...", Color.BlueViolet);
+
+                    string jsonEnterNightclub = "{\"id\": \"" + nightclub.id.ToString() + "\", \"input_counters\":{}, \"action_timestamp\":" + DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString() + "}";
+
+                    var enterNightClub = await client.PostAsync("api/v1/nightclub", new StringContent(jsonEnterNightclub, Encoding.UTF8, "application/json"));
+                    enterNightClub.EnsureSuccessStatusCode();
+                    var enterNightClubGet = await client.GetAsync("api/v1/nightclub");
+
+                    string jsonDrugs = enterNightClubGet.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+                    await buyDrugs(jsonDrugs);
                 }
-                else
+                catch
+                {
+                    Console.WriteLine("Erro!", Color.Red);
+
+                    if (await getRip() || await getPrison())
+                    {
+                        Console.WriteLine(this.msgRip, Color.DarkRed);
+                        Console.WriteLine("Tentando novamente em 5 minutos...", Color.Yellow);
+                        Thread.Sleep(5 * 60 * 1000);
+                        await enterNightclub();
+                    }
+                    else
+                    {
+
+                        Console.Write("Tentando novamente...", Color.Yellow);
+                        await enterNightclub();
+                    }
+                }
+
+
+                try
+                {
+                    Console.Write(" Saindo da " + nightclub.name + "...\n", Color.BlueViolet);
+
+                    string jsonExitNightClub = "{\"exit_key\": \"" + nightclub.id.ToString() + "\", \"e_at\":null, \"reason\":\"Manual exit\", \"input_counters\":{}, \"action_timestamp\":" + DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString() + "}";
+
+                    var exitNightClub = await client.PostAsync("api/v1/nightclub/exit", new StringContent(jsonExitNightClub, Encoding.UTF8, "application/json"));
+                    exitNightClub.EnsureSuccessStatusCode();
+                }
+                catch
                 {
 
-                    Console.Write("Tentando novamente...", Color.Yellow);
-                    await enterNightclub();
                 }
             }
-
-            
-            try
+            else
             {
-                Console.WriteLine("Saindo da " + nightclub.name + "\n", Color.BlueViolet);
-
-                string jsonExitNightClub = "{\"exit_key\": \"" + nightclub.id.ToString() + "\", \"e_at\":null, \"reason\":\"Manual exit\", \"input_counters\":{}, \"action_timestamp\":" + DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString() + "}";
-
-                var exitNightClub = await client.PostAsync("api/v1/nightclub/exit", new StringContent(jsonExitNightClub, Encoding.UTF8, "application/json"));
-                exitNightClub.EnsureSuccessStatusCode();
-            } catch
-            {
-
+                Console.WriteLine("Você está sem tickets!", Color.DarkRed);
+                await Logout();
             }
 
         }
@@ -216,7 +229,7 @@ namespace thecrims_bot.services
 
             this.drugs = parser.parseDrugs(jsonDrugs);
 
-            Console.WriteLine("Comprando " + this.drugs[0].name, Color.Fuchsia);
+            Console.Write(" Comprando " + this.drugs[0].name + "...", Color.Fuchsia);
 
             string jsonBuyDrugs = "{\"id\": " + this.drugs[0].id + ", \"input_counters\":{}, \"action_timestamp\":" + DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString() + "}";
             var buyDrugs = await client.PostAsync("api/v1/nightclub/drug", new StringContent(jsonBuyDrugs, Encoding.UTF8, "application/json"));
@@ -237,6 +250,7 @@ namespace thecrims_bot.services
                 }
 
                 await enterNightclub();
+                
             }
 
             Console.WriteLine("Roubando " + this.rob.translated_name, Color.Yellow);
@@ -658,6 +672,17 @@ namespace thecrims_bot.services
 
             }
 
+        }
+
+        public bool haveTickets()
+        {
+            if (this.user.tickets < 1)
+            {
+                return false;
+            } else
+            {
+                return true;
+            }
         }
 
     }
