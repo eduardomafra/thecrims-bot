@@ -87,7 +87,7 @@ namespace thecrims_bot.services
         {
             try
             {
-                Console.WriteLine("Encerrando sessão...", Color.Yellow);
+                Console.WriteLine("Encerrando sessão...", Color.Green);
                 var logout = await client.GetAsync("logout");
                 logout.EnsureSuccessStatusCode();
             }
@@ -241,7 +241,7 @@ namespace thecrims_bot.services
 
             Console.WriteLine("Roubando " + this.rob.translated_name, Color.Yellow);
 
-            //string jsonRob = "{\"id\":40, \"input_counters\":{}, \"action_timestamp\":" + DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString() + "}";
+            //string jsonRob = "{\"id\":19, \"input_counters\":{}, \"action_timestamp\":" + DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString() + "}";
             string jsonRob = "{\"id\": " + this.rob.id + ", \"input_counters\":{}, \"action_timestamp\":" + DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString() + "}";
 
             try
@@ -483,6 +483,7 @@ namespace thecrims_bot.services
 
                 if (string.IsNullOrEmpty(mensagem))
                 {
+                    Console.WriteLine("Ok!", Color.Green);
                     return await Task.FromResult(false);
                 } else
                 {
@@ -512,6 +513,7 @@ namespace thecrims_bot.services
 
                 if (string.IsNullOrEmpty(mensagem))
                 {
+                    Console.WriteLine("Ok!", Color.Green);
                     return await Task.FromResult(false);
                 }
                 else

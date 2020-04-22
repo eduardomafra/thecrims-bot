@@ -16,9 +16,10 @@ namespace thecrims_bot.console
     public class TCComands
     {
         TCServices service;
+        ConsoleKeyInfo cki;
         public TCComands()
         {
-            service = new TCServices();
+            service = new TCServices();          
         }
         public void showInfo()
         {
@@ -55,6 +56,7 @@ namespace thecrims_bot.console
             Console.WriteLine("\nSelecione uma opção:");
             Console.WriteLine("[1] - Roubo solo");
             Console.WriteLine("[2] - Roubo com gangue virtual");
+            Console.WriteLine("[3] - Sair");
             Console.Write("-> ");
             string opcao = Console.ReadLine();
             
@@ -72,6 +74,11 @@ namespace thecrims_bot.console
                     Console.WriteLine("Iniciando roubo com gangue virtual...\n", Color.YellowGreen);
                     await virtualGangRob();
                     break;
+                case "3":
+                    Console.Clear();
+                    showTheCrimsBot();                   
+                    await Logout();                    
+                    break;
                 default:
                     Console.WriteLine("Opção inválida!");
                     break;
@@ -81,11 +88,17 @@ namespace thecrims_bot.console
 
         public async Task soloRob()
         {
-            while (true)
+
+            while (!Console.KeyAvailable)
             {
+                if (Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape) break;
                 await this.service.Rob();
-                //Thread.Sleep(5000);
             }
+
+            Console.Clear();
+            showTheCrimsBot();
+            Console.WriteLine("Operação de roubos cancelada", Color.GreenYellow);
+            await menu();
         }
 
         public async Task virtualGangRob()
@@ -95,11 +108,18 @@ namespace thecrims_bot.console
 
             while (true)
             {
+
+                if (Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape) break;
                 await this.service.getVirtualGangRobbery();
                 showStats();
                 Console.WriteLine();
                 Thread.Sleep(1000);
             }
+
+            Console.Clear();
+            showTheCrimsBot();
+            Console.WriteLine("Operação de roubo de gangue cancelada", Color.GreenYellow);
+            await menu();
         }
 
         public async Task start()
@@ -145,7 +165,9 @@ namespace thecrims_bot.console
 
         public async Task Logout()
         {
-            await this.service.Logout();
+            await this.service.Logout();            
+            Thread.Sleep(2000);
+            Environment.Exit(0);
         }
 
     }  
