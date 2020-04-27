@@ -244,7 +244,7 @@ namespace thecrims_bot.services
             if (this.rob.energy > this.user.stamina)
             {
 
-                if(this.user.addiction >= 70)
+                if(this.user.addiction >= 5)
                 {
                     await Detox();
                 }
@@ -255,7 +255,7 @@ namespace thecrims_bot.services
 
             Console.WriteLine("Roubando " + this.rob.translated_name, Color.Yellow);
 
-            //string jsonRob = "{\"id\":19, \"input_counters\":{}, \"action_timestamp\":" + DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString() + "}";
+            //string jsonRob = "{\"id\":13, \"input_counters\":{}, \"action_timestamp\":" + DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString() + "}";
             string jsonRob = "{\"id\": " + this.rob.id + ", \"input_counters\":{}, \"action_timestamp\":" + DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString() + "}";
 
             try
@@ -367,7 +367,7 @@ namespace thecrims_bot.services
                     if (this.plannedRobbery.energy_per_participant > this.user.stamina)
                     {
 
-                        if (this.user.addiction >= 70)
+                        if (this.user.addiction >= 5)
                         {
                             await Detox();
                         }
@@ -424,7 +424,7 @@ namespace thecrims_bot.services
             if (getBestGangRobbery().energy_per_participant > this.user.stamina)
             {
 
-                if (this.user.addiction >= 70)
+                if (this.user.addiction >= 5)
                 {
                     await Detox();
                 }
@@ -474,8 +474,8 @@ namespace thecrims_bot.services
         public Robberies getBestRob()
         {
 
-            return this.robberies.OrderByDescending(id => id.id).First(x => x.successprobability >= 100);
-
+            //return this.robberies.OrderByDescending(id => id.id).First(x => x.successprobability >= 100);
+            return this.robberies.Where(w => w.id == 40).First();
         }
 
         public GangRobbery getBestGangRobbery()
@@ -585,7 +585,7 @@ namespace thecrims_bot.services
                 Console.WriteLine("Entrando na gangue virtual...", Color.YellowGreen);
                 var dict = new Dictionary<string, string>();
                 dict.Add("message", "I+wanna+join");
-                var req = new HttpRequestMessage(HttpMethod.Post, "https://www.thecrims.com" + gangsUrl[3]) { Content = new FormUrlEncodedContent(dict) };
+                var req = new HttpRequestMessage(HttpMethod.Post, "https://www.thecrims.com" + gangsUrl[6]) { Content = new FormUrlEncodedContent(dict) };
                 var res = await client.SendAsync(req);
 
             }
@@ -656,7 +656,7 @@ namespace thecrims_bot.services
                     if (this.plannedRobbery.energy_per_participant > this.user.stamina)
                     {
 
-                        if (this.user.addiction >= 70)
+                        if (this.user.addiction >= 5)
                         {
                             await Detox();
                         }

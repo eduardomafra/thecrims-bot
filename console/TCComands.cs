@@ -47,9 +47,9 @@ namespace thecrims_bot.console
             Console.WriteLine("[1] - Roubo solo");
             Console.WriteLine("[2] - Roubo com gangue virtual");
             Console.WriteLine("[3] - Sair");
-            Console.Write("-> ");
+            Console.Write(">");
             string opcao = Console.ReadLine();
-            
+
             switch (opcao)
             {
                 case "1":
@@ -69,8 +69,11 @@ namespace thecrims_bot.console
                     showTheCrimsBot();                   
                     await Logout();                    
                     break;
-                default:
-                    Console.WriteLine("Opção inválida!");
+                default:                   
+                    Console.Clear();                    
+                    showTheCrimsBot();
+                    Console.WriteLine("Opção inválida!", Color.Red);
+                    await menu();                    
                     break;
             }
 
@@ -79,13 +82,17 @@ namespace thecrims_bot.console
         public async Task soloRob()
         {
 
+            int roubos = 0;
+
             while (!Console.KeyAvailable)
             {
                 if (Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape) break;
                 Console.Clear();
                 showTheCrimsBot();
                 showInfo();
+                Console.WriteLine("Roubos: " + roubos, Color.DarkGreen);
                 await this.service.Rob();
+                roubos++;
             }
 
             Console.Clear();
@@ -136,7 +143,16 @@ namespace thecrims_bot.console
             Console.Write("Senha -> ");
             string password = Console.ReadLine();
 
-            await this.service.LoginAsync(username, password);
+            //try
+            //{
+                await this.service.LoginAsync(username, password);
+            //}
+            //catch
+            //{
+            //    Console.Clear();
+            //    Console.WriteLine("Invalid Credentials", Color.Red);
+            //    await start();
+            //}
 
             if (this.service.logged)
             {

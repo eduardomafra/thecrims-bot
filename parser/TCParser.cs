@@ -39,9 +39,10 @@ namespace thecrims_bot.parser
         {
 
             JObject jsonRobberies = JObject.Parse(stringRobberies);
-            List<Robberies> robberies = JsonConvert.DeserializeObject<List<Robberies>>(jsonRobberies["single_robberies"].ToString());
 
+            List<Robberies> robberies = JsonConvert.DeserializeObject<List<Robberies>>(jsonRobberies["single_robberies"].ToString());
             return robberies;
+            
         }
 
         public List<Nightclubs> parseNightclubs(string stringNightclubs)
