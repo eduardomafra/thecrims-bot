@@ -14,7 +14,7 @@ namespace thecrims_bot.models
         public int strength { get; set; }
         public int charisma { get; set; }
         public int intelligence { get; set; }
-        public int cash { get; set; }
+        public long cash { get; set; }
         public int stamina { get; set; }
         public string spirit_name { get; set; }
         public int level { get; set; }

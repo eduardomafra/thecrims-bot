@@ -10,7 +10,7 @@ namespace thecrims_bot.models
         public string name { get; set; }
         public int difficulty { get; set; }
         public int energy { get; set; }
-        public int spirit { get; set; }
+        public string spirit { get; set; }
         public string spiritname { get; set; }
         public int type { get; set; }
         public string translated_name { get; set; }
