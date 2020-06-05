@@ -256,7 +256,7 @@ namespace thecrims_bot.services
             Console.WriteLine("Roubando " + this.rob.translated_name, Color.Yellow);
 
             //string jsonRob = "{\"id\":13, \"input_counters\":{}, \"action_timestamp\":" + DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString() + "}";
-            string jsonRob = "{\"id\": " + this.rob.id + ", \"input_counters\":{}, \"action_timestamp\":" + DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString() + "}";
+            string jsonRob = "{\"id\": " + this.rob.id + ", \"input_counters\":{}, \"full\":true, \"action_timestamp\":" + DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString() + "}";
 
             try
             {
@@ -474,8 +474,8 @@ namespace thecrims_bot.services
         public Robberies getBestRob()
         {
 
-            //return this.robberies.OrderByDescending(id => id.id).First(x => x.successprobability >= 100);
-            return this.robberies.Where(w => w.id == 40).First();
+            return this.robberies.OrderByDescending(id => id.id).First(x => x.successprobability >= 100);
+            //return this.robberies.Where(w => w.id == 24).First();
         }
 
         public GangRobbery getBestGangRobbery()
@@ -484,6 +484,8 @@ namespace thecrims_bot.services
             return this.gangRobbery.OrderByDescending(id => id.id).First(x => x.successprobability >= 100);
 
         }
+
+
 
         public async Task<bool> getRip()
         {
